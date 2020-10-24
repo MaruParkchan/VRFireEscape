@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameSystem
+  - Laser
+  - Quest
+  - Yes
+  - No
+  - QuestSystem
   layers:
   - Default
   - TransparentFX

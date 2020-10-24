@@ -4,15 +4,43 @@ using UnityEngine;
 
 public class QuestSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int questCount = 0;
+
+    [SerializeField] private GameObject[] laserObjects;
+    [SerializeField] private GameObject[] questPanels;
+
+    private GameSystem gameSystem;
+
+    public bool isYes = false;
+    public bool isNo = false;
+
+    private void Awake()
     {
-        
+        gameSystem = GameObject.FindWithTag("GameSystem").GetComponent<GameSystem>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void IsClick()
     {
-        
+        if (isYes == false && isNo == false)
+            return;
+
+        if(isYes == true && isNo == false)
+        {
+            gameSystem.PlusScore();
+        }
+        else if(isYes == false && isNo == true)
+        {
+
+        }
+
+        questPanels[questCount].SetActive(false);
+        gameSystem.IsMoveOn();
+        questCount++;
+
+        for (int i = 0; i < laserObjects.Length; i++)
+            laserObjects[i].SetActive(false);
+
     }
+
+
 }

@@ -11,23 +11,45 @@ public class ViveInput : MonoBehaviour
     [SerializeField] private SteamVR_Action_Boolean teleportButton;
 
 
+    private QuestSystem questSystem;
+    private GameSystem gameSystem;
+    private Movement movement;
+    public bool isClick = false;
+
+    private void Awake()
+    {
+        questSystem = GameObject.FindWithTag("QuestSystem").GetComponent<QuestSystem>();
+        movement = GameObject.FindWithTag("Player").GetComponent<Movement>();
+        gameSystem = GameObject.FindWithTag("GameSystem").GetComponent<GameSystem>();
+    }
+
     private void Update()
     {
         if (GetButtonDown(pinchButton))
         {
-            Debug.Log("트리거 버튼");
+            questSystem.IsClick();
         }
 
-        if (GetButtonDown(gripButton))
+        if (GetButtonDown(teleportButton) && gameSystem.GetIsMove() == true)
         {
-            Debug.Log("옆 버튼");
+            movement.IsForward = true;
+            movement.IsMove = true;
         }
-
-
-        if (GetButtonDown(teleportButton))
+        else if (GetButtonUp(teleportButton))
         {
-            Debug.Log("텔레포트 버튼");
+            movement.IsMove = false;
         }
+
+        if (GetButtonDown(gripButton) && gameSystem.GetIsMove() == true)
+        {
+            movement.IsForward = false;
+            movement.IsMove = true;
+        }
+        else if(GetButtonUp(gripButton))
+        {
+            movement.IsMove = false;
+        }
+
 
     }
 
